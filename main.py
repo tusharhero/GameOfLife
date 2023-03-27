@@ -16,25 +16,57 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-def CreateCanvas(size = (100,100)):
+
+
+def CreateCanvas(size=(100, 100)):
     row = []
     for _ in range(size[0]):
         row.append(0)
     canvas = []
     for _ in range(size[1]):
-        canvas.append(row)
+        canvas.append(row.copy())
     return canvas
 
-def Get8neightbours(cell = [0,0]):
-    x = cell[0]
-    y = cell[1]
-    return [
-            (x+1,y),
-            (x-1,y),
-            (x,y+1),
-            (x,y-1),
-            (x+1,y+1),
-            (x+1,y-1),
-            (x-1,y+1),
-            (x-1,y-1),
-            ]
+
+def Getneighbours(canvas, coordinates=[0, 0]):
+    x = coordinates[0]
+    y = coordinates[1]
+    neighbours = []
+    for row in range(x - 1, x + 1 + 1):
+        for column in range(y - 1, y + 1 + 1):
+            if (
+                not (row == x or column == y)
+                and (row >= 0 and column >= 0)
+                and (row < len(canvas[0]) and column < len(canvas[0]))
+            ):
+                neighbours.append(GetCell(canvas, (row, column)))
+    return neighbours
+
+
+def GetneighbourPopulation(neighbours):
+    population = 0
+    for cell in neighbours:
+        if cell == 1:
+            population += 1
+    return population
+
+
+def GetCell(canvas, coordinates=(0, 0)):
+    return canvas[coordinates[0]][coordinates[1]]
+
+
+def GetNextGen(canvas):
+    for x in range(len(canvas[0])):
+        for y in range(len(canvas)):
+            coordinates = (x, y)
+            cell = GetCell(canvas, coordinates)
+            neighbours = Getneighbours(canvas, coordinates)
+            neighbourPopulation = GetneighbourPopulation(neighbours)
+            if cell == 1:
+                if neighbourPopulation < 2 or neighbourPopulation > 3:
+                    canvas[x][y] = 0
+            else:
+                if neighbourPopulation == 3:
+                    canvas[x][y] = 1
+            print(cell, neighbours, neighbourPopulation)
+    return canvas
