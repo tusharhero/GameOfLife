@@ -35,7 +35,7 @@ def Getneighbours(canvas, coordinates=[0, 0]):
     for row in range(x - 1, x + 1 + 1):
         for column in range(y - 1, y + 1 + 1):
             if (
-                not (row == x or column == y)
+                not (row == x and column == y)
                 and (row >= 0 and column >= 0)
                 and (row < len(canvas[0]) and column < len(canvas[0]))
             ):
@@ -56,6 +56,7 @@ def GetCell(canvas, coordinates=(0, 0)):
 
 
 def GetNextGen(canvas):
+    NextGenCanvas = CreateCanvas((len(canvas[0]), len(canvas)))
     for x in range(len(canvas[0])):
         for y in range(len(canvas)):
             coordinates = (x, y)
@@ -63,10 +64,13 @@ def GetNextGen(canvas):
             neighbours = Getneighbours(canvas, coordinates)
             neighbourPopulation = GetneighbourPopulation(neighbours)
             if cell == 1:
-                if neighbourPopulation < 2 or neighbourPopulation > 3:
-                    canvas[x][y] = 0
+                if neighbourPopulation in [2,3]:
+                    NextGenCanvas[x][y] = 1
+                else:
+                    NextGenCanvas[x][y] = 0
             else:
                 if neighbourPopulation == 3:
-                    canvas[x][y] = 1
-            print(cell, neighbours, neighbourPopulation)
-    return canvas
+                    NextGenCanvas[x][y] = 1
+                else:
+                    NextGenCanvas[x][y] = 0
+    return NextGenCanvas
