@@ -19,10 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gol_engine as gol
 import time
-alive = "⬜"
-dead = "⬛"
+alive: str= "⬜"
+dead:str= "⬛"
 
-canvas = gol.CreateCanvas((10, 10))
+canvas: list= gol.CreateCanvas((10, 10))
 
 for x_index in range(len(canvas)):
     print(f" {x_index} ", end="")
@@ -32,9 +32,11 @@ for y_index in range(len(canvas[0])):
 print("\nEnter the coordinates you want to spell life into:")
 
 while True:
-    coordinates = eval(input())
-    if not coordinates:
+    try:
+        coordinates: tuple = tuple(eval(input()))
+    except:
         break
+
     canvas[coordinates[0]][coordinates[1]] = 1
 
 for g in range(100):
@@ -48,4 +50,4 @@ for g in range(100):
                 print(dead,end="")  
         print()
     canvas = gol.GetNextGen(canvas)
-    time.sleep(3)
+    time.sleep(1)

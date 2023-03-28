@@ -18,20 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
-def CreateCanvas(size=(100, 100)):
-    row = []
+def CreateCanvas(size: tuple = (100, 100)) -> list:
+    row: list = []
     for _ in range(size[0]):
         row.append(0)
-    canvas = []
+    canvas: list = []
     for _ in range(size[1]):
         canvas.append(row.copy())
     return canvas
 
 
-def Getneighbours(canvas, coordinates=[0, 0]):
-    x = coordinates[0]
-    y = coordinates[1]
-    neighbours = []
+def Getneighbours(canvas: list, coordinates: tuple = (0, 0)) -> list:
+    x: int = coordinates[0]
+    y: int = coordinates[1]
+    neighbours: list = []
     for row in range(x - 1, x + 1 + 1):
         for column in range(y - 1, y + 1 + 1):
             if (
@@ -43,26 +43,26 @@ def Getneighbours(canvas, coordinates=[0, 0]):
     return neighbours
 
 
-def GetneighbourPopulation(neighbours):
-    population = 0
+def GetneighbourPopulation(neighbours: list) -> int:
+    population: int = 0
     for cell in neighbours:
         if cell == 1:
             population += 1
     return population
 
 
-def GetCell(canvas, coordinates=(0, 0)):
+def GetCell(canvas: list, coordinates: tuple = (0, 0)) -> int:
     return canvas[coordinates[0]][coordinates[1]]
 
 
-def GetNextGen(canvas):
-    NextGenCanvas = CreateCanvas((len(canvas[0]), len(canvas)))
+def GetNextGen(canvas: list) -> list:
+    NextGenCanvas: list = CreateCanvas((len(canvas[0]), len(canvas)))
     for x in range(len(canvas[0])):
         for y in range(len(canvas)):
-            coordinates = (x, y)
-            cell = GetCell(canvas, coordinates)
-            neighbours = Getneighbours(canvas, coordinates)
-            neighbourPopulation = GetneighbourPopulation(neighbours)
+            coordinates: tuple = (x, y)
+            cell: int = GetCell(canvas, coordinates)
+            neighbours: list = Getneighbours(canvas, coordinates)
+            neighbourPopulation: int = GetneighbourPopulation(neighbours)
             if cell == 1:
                 if neighbourPopulation in [2, 3]:
                     NextGenCanvas[x][y] = 1
