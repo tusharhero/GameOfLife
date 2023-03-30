@@ -22,7 +22,12 @@ import time
 alive: str= "⬜"
 dead:str= "⬛"
 
-canvas: list= gol.CreateCanvas((10, 10))
+try:
+    size: tuple = tuple(eval(input("Enter the size: ")))
+except:
+    size: tuple = (10,10)
+
+canvas: list= gol.CreateCanvas(size)
 
 for x_index in range(len(canvas)):
     print(f" {x_index} ", end="")
