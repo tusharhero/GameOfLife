@@ -44,7 +44,7 @@ while True:
 
     canvas[coordinates[0]][coordinates[1]] = 1
 
-for g in range(100):
+for g in range(1000):
     print(chr(27) + "[2J") #escape codes to clear the terminal
     print(f"generation:{g}")
     for row in canvas:
@@ -55,4 +55,3 @@ for g in range(100):
                 print(dead,end="")  
         print()
     canvas = gol.GetNextGen(canvas)
-    time.sleep(1)
