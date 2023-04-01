@@ -1,8 +1,11 @@
 import random
 
-size = (50, 50)
+density = 1
+
+size = (100, 100)
 print(size)
 
-for i in range(random.randrange(min(size))):
-    for j in range(random.randrange(min(size))):
-        print((i,j))
+for _ in range(int(size[0] * size[1] * density)):
+    i = random.randrange(size[0])
+    j = random.randrange(size[1])
+    print((i, j))
