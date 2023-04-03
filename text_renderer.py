@@ -19,15 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gol_engine as gol
 import time
-alive: str= "⬜"
-dead:str= "⬛"
+
+alive: str = "⬜"
+dead: str = "⬛"
 
 try:
     size: tuple = tuple(eval(input("Enter the size: ")))
 except:
-    size: tuple = (10,10)
+    size: tuple = (10, 10)
 
-canvas: list= gol.CreateCanvas(size)
+canvas: list = gol.CreateCanvas(size)
 
 for x_index in range(len(canvas)):
     print(f" {x_index} ", end="")
@@ -45,13 +46,13 @@ while True:
     canvas[coordinates[0]][coordinates[1]] = 1
 
 for g in range(1000):
-    print(chr(27) + "[2J") #escape codes to clear the terminal
+    print(chr(27) + "[2J")  # escape codes to clear the terminal
     print(f"generation:{g}")
     for row in canvas:
         for cell in row:
             if cell == 1:
-                print(alive,end="")
+                print(alive, end="")
             else:
-                print(dead,end="")  
+                print(dead, end="")
         print()
     canvas = gol.GetNextGen(canvas)
