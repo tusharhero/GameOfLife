@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
-def CreateCanvas(size: tuple = (100, 100)) -> list:
+def create_canvas(size: tuple = (100, 100)) -> list:
     row: list = []
     for _ in range(size[0]):
         row.append(0)
@@ -28,7 +28,7 @@ def CreateCanvas(size: tuple = (100, 100)) -> list:
     return canvas
 
 
-def GetAlivecells(Canvas: list) -> list:
+def get_alive_cells(Canvas: list) -> list:
     alivecells: list = []
     for row in range(len(Canvas)):
         for column in range(len(Canvas[0])):
@@ -37,7 +37,7 @@ def GetAlivecells(Canvas: list) -> list:
     return alivecells
 
 
-def Getneighbours(canvas: list, coordinates: tuple = (0, 0)) -> list:
+def get_neighbours(canvas: list, coordinates: tuple = (0, 0)) -> list:
     x: int = coordinates[0]
     y: int = coordinates[1]
     neighbours: list = []
@@ -52,36 +52,40 @@ def Getneighbours(canvas: list, coordinates: tuple = (0, 0)) -> list:
     return neighbours
 
 
-def GetneighbourPopulation(Canvas: list, neighbours: list) -> int:
+def get_neighbour_population(Canvas: list, neighbours: list) -> int:
     population: int = 0
     for cell in neighbours:
-        if GetCell(Canvas, cell) == 1:
+        if getcell(Canvas, cell) == 1:
             population += 1
     return population
 
 
-def GetCell(canvas: list, coordinates: tuple = (0, 0)) -> int:
+def getcell(canvas: list, coordinates: tuple = (0, 0)) -> int:
     return canvas[coordinates[0]][coordinates[1]]
 
 
-def GetNextGen(canvas: list) -> list:
-    alivecells: list = GetAlivecells(canvas)
-    NextGenCanvas: list = CreateCanvas((len(canvas[0]), len(canvas)))
+def getnextgen(canvas: list) -> list:
+    alivecells: list = get_alive_cells(canvas)
+    nextgencanvas: list = create_canvas((len(canvas[0]), len(canvas)))
+
     for alivecell in alivecells:
-        neighbours: list = Getneighbours(canvas, alivecell)
+        neighbours: list = get_neighbours(canvas, alivecell)
+
         for coordinates in neighbours + [alivecell]:
-            x, y = coordinates[0], coordinates[1]
-            cell = GetCell(canvas, coordinates)
-            cellneighbours: list = Getneighbours(canvas, coordinates)
-            neighbourPopulation: int = GetneighbourPopulation(canvas, cellneighbours)
+            x, y = coordinates
+            cell = getcell(canvas, coordinates)
+            cellneighbours: list = get_neighbours(canvas, coordinates)
+            neighbourPopulation: int = get_neighbour_population(canvas, cellneighbours)
+
             if cell == 1:
                 if neighbourPopulation in [2, 3]:
-                    NextGenCanvas[x][y] = 1
+                    nextgencanvas[x][y] = 1
                 else:
-                    NextGenCanvas[x][y] = 0
+                    nextgencanvas[x][y] = 0
             else:
                 if neighbourPopulation == 3:
-                    NextGenCanvas[x][y] = 1
+                    nextgencanvas[x][y] = 1
                 else:
-                    NextGenCanvas[x][y] = 0
-    return NextGenCanvas
+                    nextgencanvas[x][y] = 0
+
+    return nextgencanvas

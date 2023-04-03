@@ -18,17 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import gol_engine as gol
-import time
 
 alive: str = "⬜"
 dead: str = "⬛"
 
 try:
     size: tuple = tuple(eval(input("Enter the size: ")))
-except:
+except TypeError:
     size: tuple = (10, 10)
 
-canvas: list = gol.CreateCanvas(size)
+canvas: list = gol.create_canvas(size)
 
 for x_index in range(len(canvas)):
     print(f" {x_index} ", end="")
@@ -40,7 +39,7 @@ print("\nEnter the coordinates you want to spell life into:")
 while True:
     try:
         coordinates: tuple = tuple(eval(input()))
-    except:
+    except TypeError:
         break
 
     canvas[coordinates[0]][coordinates[1]] = 1
@@ -55,4 +54,4 @@ for g in range(1000):
             else:
                 print(dead, end="")
         print()
-    canvas = gol.GetNextGen(canvas)
+    canvas = gol.getnextgen(canvas)
