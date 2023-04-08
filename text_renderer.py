@@ -16,15 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import gol_engine as gol
 
-alive: str = "⬜"
-dead: str = "⬛"
+alive: str = "⚪"
+dead: str = "⚫"
 
 try:
     size: tuple = tuple(eval(input("Enter the size: ")))
-except TypeError:
+except:
     size: tuple = (10, 10)
 
 canvas: list = gol.create_canvas(size)
@@ -39,7 +38,7 @@ print("\nEnter the coordinates you want to spell life into:")
 while True:
     try:
         coordinates: tuple = tuple(eval(input()))
-    except TypeError:
+    except:
         break
 
     canvas[coordinates[0]][coordinates[1]] = 1
