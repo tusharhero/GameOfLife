@@ -17,22 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import numpy as np
 
-def create_canvas(size: tuple = (100, 100)) -> list:
-    row: list = []
-    for _ in range(size[0]):
-        row.append(0)
-    canvas: list = []
-    for _ in range(size[1]):
-        canvas.append(row.copy())
+
+def create_canvas(size: tuple = (100, 100)) -> np.ndarray:
+    canvas = (
+        np.random.uniform(size=size) > 0.5
+    )  # uniform() returns an array with values in the range [0,1) > 0.5 works on each array
     return canvas
 
 
-def get_alive_cells(Canvas: list) -> list:
+def get_alive_cells(Canvas: np.ndarray) -> list:
     alivecells: list = []
     for row in range(len(Canvas)):
         for column in range(len(Canvas[0])):
-            if Canvas[row][column] == 1:
+            if Canvas[row][column]:
                 alivecells.append((row, column))
     return alivecells
 
